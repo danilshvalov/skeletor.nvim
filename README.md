@@ -1,6 +1,5 @@
-# skeletor.nvim
-
-Skeletor is a project template generator for Neovim.
+<h1 align="center"><code>skeletor.nvim</code></h1>
+<p align="center"><sup>⚡ Project template generator for Neovim ⚡</sup></p>
 
 ## ⚡️ Requirements
 
