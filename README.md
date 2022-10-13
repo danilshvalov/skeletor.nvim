@@ -1,5 +1,5 @@
 <h1 align="center"><code>skeletor.nvim</code></h1>
-<p align="center"><sup>⚡ Project template generator for Neovim ⚡</sup></p>
+<p align="center">⚡ Project template generator for Neovim ⚡</p>
 
 ## ⚡️ Requirements
 
