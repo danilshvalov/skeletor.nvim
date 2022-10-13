@@ -27,4 +27,4 @@ use({
 
 ## 🔥 Inspired by
 
-* [skeleton.el](https://github.com/chrisbarrett/skeletor.el) -- Powerful project skeletons for Emacs.
+* [skeletor.el](https://github.com/chrisbarrett/skeletor.el) - Powerful project skeletons for Emacs.
