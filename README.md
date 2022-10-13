@@ -1,7 +1,7 @@
 <h1 align="center"><code>skeletor.nvim</code></h1>
 <p align="center">⚡ Project template generator for Neovim ⚡</p>
 
-## ⚡️ Requirements
+## ⛓ Requirements
 
 * Neovim >= 0.8.0
 * [plenary.nvim](https://github.com/nvim-lua/plenary.nvim/)
