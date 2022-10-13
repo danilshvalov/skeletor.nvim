@@ -3,8 +3,7 @@
 
 ![skeletor](https://user-images.githubusercontent.com/57654917/195681224-e4d36de7-4310-4a4d-ae63-6a0a07589966.jpg)
 
-
-## ⛓ Requirements
+## 🔗Requirements
 
 * Neovim >= 0.8.0
 * [plenary.nvim](https://github.com/nvim-lua/plenary.nvim/)
