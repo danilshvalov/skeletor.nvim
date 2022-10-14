@@ -1,8 +1,7 @@
 local scan = require("plenary.scandir")
 local Path = require("plenary.path")
 local Job = require("plenary.job")
-local async = require("async")
-local promise = require("promise")
+local async = require("plenary.async")
 
 local utils = require("skeletor.utils")
 local config = require("skeletor.config")
@@ -83,7 +82,6 @@ function Template:__process_files(output_path)
             file_path = Path:new(file_path)
             self:__process_file(file_path)
         end,
-        on_exit = function() end,
     })
 
     if self.template.init_git then
@@ -106,54 +104,37 @@ function Template:__process_files(output_path)
 end
 
 function Template:__validate_license()
-    return promise(function(resolve, reject)
-        if not config.options.user_licenses[self.template.license] then
-            reject("Unable to find the licence file:", self.template.license)
-        else
-            self.template.license = Path:new(config.options.user_licenses[self.template.license])
-            resolve()
-        end
-    end)
+    if not config.options.user_licenses[self.template.license] then
+        log.error("Unable to find the licence file:", self.template.license)
+    else
+        self.template.license = Path:new(config.options.user_licenses[self.template.license])
+    end
 end
 
 function Template:__prepare_license()
-    return promise(function(resolve)
-        load_licenses()
+    load_licenses()
 
-        async(function()
-            if self.template.license and type(self.template.license) == "boolean" then
-                self.template.license =
-                await(utils.select_item("Select license", vim.tbl_keys(config.options.user_licenses)))
-                resolve()
-            end
-        end)
-    end):thenCall(function()
-        return self:__validate_license()
-    end)
+    if self.template.license and type(self.template.license) == "boolean" then
+        self.template.license = utils.select_item("Select license", vim.tbl_keys(config.options.user_licenses))
+    end
+    self:__validate_license()
 end
 
 function Template:__prepare_template()
-    return async(function()
-        for pattern, substitution in pairs(self.template.substitutions) do
-            if type(substitution) == "function" then
-                self.template.substitutions[pattern] = await(substitution())
-            end
+    for pattern, substitution in pairs(self.template.substitutions) do
+        if type(substitution) == "function" then
+            self.template.substitutions[pattern] = substitution()
         end
-    end)
+    end
 end
 
 function Template:create(output_path)
-    self
-        :__prepare_template()
-        :thenCall(function()
-            return self:__prepare_license()
-        end)
-        :thenCall(function()
-            return self:__process_files(output_path)
-        end)
-        :thenCall(function()
-            log.info("The project was successfully created!")
-        end)
+    async.run(function()
+        self:__prepare_template()
+        self:__prepare_license()
+        self:__process_files(output_path)
+        log.info("The project was successfully created!")
+    end)
 end
 
 return Template

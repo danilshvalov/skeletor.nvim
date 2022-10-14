@@ -1,6 +1,5 @@
 local Path = require("plenary.path")
-
-local async = require("async")
+local async = require("plenary.async")
 
 local log = require("skeletor.log")
 local config = require("skeletor.config")
@@ -56,11 +55,11 @@ M.create_project = function(opts)
     path:mkdir()
 
     local template_title = opts.template_title
-    async(function()
+    async.run(function()
         local template_titles = get_template_titles()
 
         if not template_title then
-            template_title = await(utils.select_item("Select template", vim.tbl_keys(template_titles)))
+            template_title = utils.select_item("Select template", vim.tbl_keys(template_titles))
         end
 
         local template_name = template_titles[template_title]

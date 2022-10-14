@@ -1,4 +1,3 @@
-local promise = require("promise")
 local Job = require("plenary.job")
 
 local M = {}
@@ -11,18 +10,14 @@ local default_config = {
         substitutions = {
             ["__USER-NAME__"] = function()
                 if vim.fn.executable("git") then
-                    return promise(function(resolve, _)
-                        Job:new({
-                            command = "git",
-                            args = { "config", "user.name" },
-                            on_exit = function(response)
-                                local result = response:result()
-                                if #result > 0 then
-                                    resolve(result[1])
-                                end
-                            end,
-                        }):start()
-                    end)
+                    local result, _ = Job:new({
+                        command = "git",
+                        args = { "config", "user.name" },
+                    }):sync()
+
+                    if #result > 0 then
+                        return result[1]
+                    end
                 end
             end,
             ["__YEAR__"] = vim.fn.strftime("%Y"),
