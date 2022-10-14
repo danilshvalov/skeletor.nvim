@@ -29,7 +29,7 @@ M.define_template = function(name, opts)
 
     opts.substitutions = opts.substitutions or {}
 
-    return Template:new(opts)
+    config.options.user_templates[name] = opts
 end
 
 local get_template_titles = function()
@@ -63,7 +63,8 @@ M.create_project = function(opts)
         end
 
         local template_name = template_titles[template_title]
-        config.options.user_templates[template_name]:create(path)
+        local template_data = config.options.user_templates[template_name]
+        Template:new(template_data):create(path)
     end)
 end
 

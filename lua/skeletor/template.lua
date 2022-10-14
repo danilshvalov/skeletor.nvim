@@ -35,8 +35,6 @@ function Template:new(template_data)
     setmetatable(obj, self)
     self.__index = self
 
-    config.options.user_templates[obj.name] = obj
-
     return obj
 end
 
@@ -92,8 +90,8 @@ function Template:__process_files(output_path)
         }):start()
     end
 
-    if type(self.template.license) == "table" then
-        self:__process_file(self.template.license, "LICENSE")
+    if type(self.license) == "table" then
+        self:__process_file(self.license, "LICENSE")
     end
 
     if self.template.after_creation then
@@ -107,7 +105,7 @@ function Template:__validate_license()
     if not config.options.user_licenses[self.template.license] then
         log.error("Unable to find the licence file:", self.template.license)
     else
-        self.template.license = Path:new(config.options.user_licenses[self.template.license])
+        self.license = Path:new(config.options.user_licenses[self.template.license])
     end
 end
 
