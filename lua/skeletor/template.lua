@@ -72,8 +72,6 @@ function Template:__process_file(file_path, output_filename)
 end
 
 function Template:__process_files(output_path)
-    self.output_path = output_path
-
     scan.scan_dir(self.template.path:absolute(), {
         hidden = true,
         on_insert = function(file_path)
@@ -95,9 +93,7 @@ function Template:__process_files(output_path)
     end
 
     if self.template.after_creation then
-        self.template.after_creation({
-            cwd = output_path:absolute(),
-        })
+        self.template.after_creation(self.instance_info)
     end
 end
 
@@ -121,12 +117,17 @@ end
 function Template:__prepare_template()
     for pattern, substitution in pairs(self.template.substitutions) do
         if type(substitution) == "function" then
-            self.template.substitutions[pattern] = substitution()
+            self.template.substitutions[pattern] = substitution(self.instance_info)
         end
     end
 end
 
 function Template:create(output_path)
+    self.output_path = output_path
+    self.instance_info = {
+        cwd = output_path:absolute(),
+    }
+
     async.run(function()
         self:__prepare_template()
         self:__prepare_license()
