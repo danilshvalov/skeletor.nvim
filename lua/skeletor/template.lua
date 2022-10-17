@@ -66,7 +66,7 @@ function Template:__process_file(file_path, output_filename)
 
         local output_file_path = self:__make_output_path(file_path, output_filename)
 
-        output_file_path:parent():mkdir()
+        output_file_path:parent():mkdir({ parents = true })
         output_file_path:write(content, "w")
     end)
 end
