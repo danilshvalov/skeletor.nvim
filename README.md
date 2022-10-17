@@ -20,11 +20,11 @@ use({
 })
 ```
 
-## Usage
+## 🚀 Usage
 
 Use `:Skeletor $path$` to create a new project at path `$path$` based on an existing template.
 
-## Configuration
+## ⚙️  Configuration
 
 ```lua
 require("skeletor").setup({
@@ -61,7 +61,7 @@ require("skeletor").setup({
 })
 ```
 
-## Templates creation
+## 📚 Templates creation
 
 The following code is an example of defining a new template:
 
@@ -95,9 +95,9 @@ The meaning of the fields can be found in the following table:
 | `substitutions`  | `table`               | Table of substitutions. See [below](#substitutions) for details.                                                                                                                                                                           |
 | `after_creation` | `function`            | The function that will be called after the template is created.                                                                                                                                                          |
 
-## Substitutions
+## 📝 Substitutions
 
-### Concept
+### 💡 Concept
 
 Skeletor can perform text substitutions when it creates new projects. This makes it possible to refer to the name of the project, add time-stamps and customise the contents of files according to user input when a project is created.
 
@@ -131,7 +131,7 @@ Then the same rule applies here:
 This is a file with VALUE-OF-SUBSTITUTION.
 ```
 
-### Example
+### 🧶 Example
 
 Let's look at an example. Let's create the following template:
 
@@ -167,7 +167,7 @@ nvim-plugin
 
 Also let the README file be with the following contents:
 
-```md
+```markdown
 The plugin `__PROJECT-NAME__` was created by __USER-NAME__ at __DATETIME__.
 ```
 
@@ -185,7 +185,7 @@ nvim-plugin
 
 And inside the README there will be the following text:
 
-```md
+```markdown
 The plugin `test` was created by Tomas Anderson at 2022-10-18_01:34:02.
 ```
 
