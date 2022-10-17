@@ -20,6 +20,47 @@ use({
 })
 ```
 
+## Usage
+
+Use `:Skeletor $path$` to create a new project at path `$path$` based on an existing template.
+
+## Configuration
+
+```lua
+require("skeletor").setup({
+    -- global templates settings
+    templates = {
+        -- path to templates directory
+        directory = vim.fn.stdpath("config") .. "/templates",
+        -- init git after
+        init_git = true,
+        -- add license
+        license = true,
+        -- global substitutions
+        substitutions = {
+            ["__USER-NAME__"] = function()
+                if vim.fn.executable("git") then
+                    local result, _ = Job:new({
+                        command = "git",
+                        args = { "config", "user.name" },
+                    }):sync()
+
+                    if #result > 0 then
+                        return result[1]
+                    end
+                end
+            end,
+            ["__YEAR__"] = vim.fn.strftime("%Y"),
+        },
+    },
+    -- global license settings
+    licenses = {
+        -- path to licenses directory
+        directory = vim.fn.stdpath("config") .. "/templates/licenses",
+    },
+})
+```
+
 ## 🔥 Inspired by
 
 * [skeletor.el](https://github.com/chrisbarrett/skeletor.el) - Powerful project skeletons for Emacs.
